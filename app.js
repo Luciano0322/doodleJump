@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let doodlerBottomSpace = 150
     let isGameOver = false
     let platformCount = 5
+    let platforms = []
+    let upTimerId
+    let downTimerId
 
     function createDoodler() {
         root.appendChild(doodler)
@@ -32,13 +35,55 @@ document.addEventListener('DOMContentLoaded', () => {
             let platformGap = 600 / platformCount
             let newPlatBottom = 100 + i * platformGap
             let newPlatform = new Platform(newPlatBottom)
+            platforms.push(newPlatform)
+            console.log(platforms);
         }
+    }
+
+    function movePlatforms() {
+        if (doodlerBottomSpace > 200) {
+            platforms.forEach(platform => {
+                platform.bottom -= 4
+                let visual = platform.visual
+                visual.style.bottom = platform.bottom + 'px'
+            })
+        }
+    }
+    
+    function jump() {
+        upTimerId = setInterval(() => {
+            doodlerBottomSpace += 20
+            doodler.style.bottom = doodlerBottomSpace + 'px'
+            if(doodlerBottomSpace > 350) {
+                fall()
+            }
+        }, 30)
+    }
+
+    function fall() {
+        clearInterval(upTimerId)
+        downTimerId = setInterval(() => {
+            doodlerBottomSpace -= 5
+            doodler.style.bottom = doodlerBottomSpace + 'px'
+            if (doodlerBottomSpace <= 0) {
+                gameOver()
+            }
+        }, 30)
+    }
+
+    function gameOver() {
+        console.log('game over');
+        isGameOver = true
+        clearInterval(upTimerId)
+        clearInterval(downTimerId)
     }
 
     function start() {
         if (!isGameOver) {
             createDoodler()
             createPlatforms()
+            setInterval(movePlatforms, 30)
+            jump()
         }
     }
     //碰到底部
