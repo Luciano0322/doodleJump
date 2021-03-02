@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const root = document.querySelector('.root')
     const doodler = document.createElement('div')
+
     let doodlerLeftSpace = 80
     let startPoint = 150
     let doodlerBottomSpace = startPoint
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let rightTimerId
     let score = 0
 
+    //設立平台共件
     class Platform {
         constructor(newPlatBottom) {
             this.bottom = newPlatBottom
@@ -40,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    //遊戲中
     function movePlatforms() {
         if (doodlerBottomSpace > 200) {
             platforms.forEach(platform => {
@@ -167,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             root.removeChild(root.firstChild)
         }
         root.innerHTML = score
+        
         clearInterval(upTimerId)
         clearInterval(downTimerId)
         clearInterval(leftTimerId)

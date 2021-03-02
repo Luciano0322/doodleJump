@@ -20,3 +20,9 @@
     background-image: url('img/platform.png');
     position: absolute;
 }
+
+.rs {
+    width: 200px;
+    text-decoration: none;
+    font-weight: bold;
+}
